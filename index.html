@@ -163,7 +163,16 @@ body.loaded{opacity:1}
 .ba-label{position:absolute;top:20px;z-index:12;font-family:var(--display);font-size:13px;font-weight:700;padding:8px 18px;border-radius:100px;background:#0D1B2E;color:white;letter-spacing:.01em}
 .ba-label.before{left:20px}
 .ba-label.after{right:20px}
-.ba-dirty{filter:brightness(0.65) saturate(0.4) sepia(0.35) contrast(0.85)}
+.ba-dirty{filter:brightness(0.58) saturate(0.25) sepia(0.55) contrast(0.82) hue-rotate(10deg)}
+.ba-dirt-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(ellipse 180px 120px at 15% 25%, rgba(101,72,10,0.45) 0%, transparent 70%),
+    radial-gradient(ellipse 120px 90px at 75% 55%, rgba(80,55,8,0.38) 0%, transparent 65%),
+    radial-gradient(ellipse 200px 130px at 50% 85%, rgba(90,65,12,0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 100px 70px at 88% 18%, rgba(70,50,10,0.32) 0%, transparent 65%),
+    radial-gradient(ellipse 140px 100px at 30% 70%, rgba(85,60,10,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 60px at 60% 15%, rgba(95,70,8,0.28) 0%, transparent 60%),
+    linear-gradient(170deg, rgba(40,25,0,0.18) 0%, rgba(70,50,5,0.28) 100%)}
 .ba-caption{padding:18px 24px;background:white;font-size:14px;font-weight:500;color:var(--dark);text-align:center}
 @media(max-width:768px){#before-after{padding:80px 24px}.ba-wrap{aspect-ratio:4/3}}
 
@@ -574,8 +583,9 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   </div>
   <div class="ba-single" data-aos="fade-up" data-aos-delay="100">
     <div class="ba-wrap" data-ba>
-      <!-- ΠΡΙΝ (βρώμικο) — αριστερά, ίδια φωτογραφία με dirty filter -->
+      <!-- ΠΡΙΝ (βρώμικο) — αριστερά, ίδια φωτογραφία με dirty filter + overlay -->
       <img class="ba-img ba-dirty" src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=90" alt="Πριν">
+      <div class="ba-dirt-overlay"></div>
       <!-- ΜΕΤΑ (καθαρό) — δεξιά, κανονική φωτογραφία -->
       <div class="ba-after-wrap" style="width:50%">
         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=90" alt="Μετά">
