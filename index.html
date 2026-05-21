@@ -152,21 +152,19 @@ body.loaded{opacity:1}
 /* BEFORE / AFTER */
 #before-after{background:var(--cream);padding:120px 48px}
 .ba-header{max-width:1200px;margin:0 auto 64px;text-align:center}
-.ba-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.ba-item{border-radius:20px;overflow:hidden;box-shadow:0 8px 32px rgba(30,95,173,0.1);position:relative;user-select:none}
-.ba-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;cursor:ew-resize}
+.ba-single{max-width:900px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:0 16px 56px rgba(30,95,173,0.14);position:relative;user-select:none}
+.ba-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;cursor:ew-resize}
 .ba-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .ba-after-wrap{position:absolute;inset:0;overflow:hidden}
 .ba-after-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.ba-handle{position:absolute;top:0;bottom:0;width:2px;background:white;z-index:10;transform:translateX(-50%);pointer-events:none}
-.ba-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;background:white;border-radius:50%;box-shadow:0 2px 12px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center}
-.ba-handle::after{content:'‹ ›';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-2px;z-index:11}
-.ba-label{position:absolute;bottom:14px;z-index:12;font-family:var(--display);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:5px 12px;border-radius:100px}
-.ba-label.before{left:14px;background:rgba(0,0,0,0.55);color:white}
-.ba-label.after{right:14px;background:var(--blue);color:white}
-.ba-caption{padding:16px 20px;background:white;font-size:13px;font-weight:500;color:var(--dark);text-align:center;border-top:1px solid var(--border)}
-@media(max-width:1024px){.ba-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.ba-grid{grid-template-columns:1fr}}
+.ba-handle{position:absolute;top:0;bottom:0;width:2px;background:white;z-index:10;transform:translateX(-50%);pointer-events:none;box-shadow:0 0 12px rgba(0,0,0,0.3)}
+.ba-handle::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;background:white;border-radius:50%;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.ba-handle::after{content:'◀ ▶';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-1px;z-index:11}
+.ba-label{position:absolute;top:20px;z-index:12;font-family:var(--display);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:6px 14px;border-radius:100px}
+.ba-label.before{left:20px;background:rgba(0,0,0,0.6);color:white}
+.ba-label.after{right:20px;background:var(--blue);color:white}
+.ba-caption{padding:18px 24px;background:white;font-size:14px;font-weight:500;color:var(--dark);text-align:center;border-top:1px solid var(--border)}
+@media(max-width:768px){#before-after{padding:80px 24px}.ba-wrap{aspect-ratio:4/3}}
 
 /* PHOTO STRIP */
 #photo-strip{background:var(--dark);padding:0;overflow:hidden}
@@ -570,50 +568,22 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <section id="before-after">
   <div class="ba-header">
     <p class="sec-eyebrow" style="justify-content:center;" data-aos="fade-up">Πριν &amp; Μετά</p>
-    <h2 class="sec-title" data-aos="fade-up" data-aos-delay="80">Η Διαφορά Μιλά<br>Μόνη της</h2>
+    <h2 class="sec-title" data-aos="fade-up" data-aos-delay="80">Η Διαφορά Μιλά<br>από Μόνη της</h2>
     <p class="sec-sub" style="margin:14px auto 0;text-align:center;" data-aos="fade-up" data-aos-delay="160">Σύρε τη γραμμή για να δεις τη μεταμόρφωση — πριν και μετά τον επαγγελματικό καθαρισμό.</p>
   </div>
-  <div class="ba-grid">
-
-    <div class="ba-item" data-aos="fade-up">
-      <div class="ba-wrap" data-ba>
-        <img class="ba-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" alt="Πριν">
-        <div class="ba-after-wrap" style="width:50%">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Μετά">
-        </div>
-        <div class="ba-handle" style="left:50%"></div>
-        <span class="ba-label before">Πριν</span>
-        <span class="ba-label after">Μετά</span>
+  <div class="ba-single" data-aos="fade-up" data-aos-delay="100">
+    <div class="ba-wrap" data-ba>
+      <!-- ΠΡΙΝ (βρώμικο) — αριστερά -->
+      <img class="ba-img" src="https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?w=1200&q=85" alt="Πριν">
+      <!-- ΜΕΤΑ (καθαρό) — δεξιά -->
+      <div class="ba-after-wrap" style="width:50%">
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=85" alt="Μετά">
       </div>
-      <div class="ba-caption">Κουζίνα — Βαθύς Καθαρισμός</div>
+      <div class="ba-handle" style="left:50%"></div>
+      <span class="ba-label before">Πριν</span>
+      <span class="ba-label after">Μετά</span>
     </div>
-
-    <div class="ba-item" data-aos="fade-up" data-aos-delay="100">
-      <div class="ba-wrap" data-ba>
-        <img class="ba-img" src="https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?w=800&q=80" alt="Πριν">
-        <div class="ba-after-wrap" style="width:50%">
-          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="Μετά">
-        </div>
-        <div class="ba-handle" style="left:50%"></div>
-        <span class="ba-label before">Πριν</span>
-        <span class="ba-label after">Μετά</span>
-      </div>
-      <div class="ba-caption">Υπνοδωμάτιο Airbnb — Turnover</div>
-    </div>
-
-    <div class="ba-item" data-aos="fade-up" data-aos-delay="200">
-      <div class="ba-wrap" data-ba>
-        <img class="ba-img" src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80" alt="Πριν">
-        <div class="ba-after-wrap" style="width:50%">
-          <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80" alt="Μετά">
-        </div>
-        <div class="ba-handle" style="left:50%"></div>
-        <span class="ba-label before">Πριν</span>
-        <span class="ba-label after">Μετά</span>
-      </div>
-      <div class="ba-caption">Μπάνιο — Αφαίρεση Αλάτων</div>
-    </div>
-
+    <div class="ba-caption">Υπνοδωμάτιο Airbnb — Turnover Καθαρισμός</div>
   </div>
 </section>
 
