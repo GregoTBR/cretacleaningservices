@@ -284,40 +284,135 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 #ctc::before{content:'Καλέστε';position:absolute;bottom:calc(100% + 8px);right:0;background:var(--dark);color:var(--white);font-family:var(--body);font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}
 #ctc:hover::before{opacity:1}
 
-/* RESPONSIVE */
+/* RESPONSIVE — TABLET */
 @media(max-width:1024px){
   #navbar{width:calc(100% - 32px);padding:10px 14px 10px 18px}
   .nav-center{display:none}
   .hamburger{display:flex}
-  .hero-headline{font-size:60px}
+  .hero-headline{font-size:58px}
   .hero-review{right:24px;bottom:24px;width:270px}
-  .svc-content{grid-template-columns:1fr;padding-left:48px}
-  .why-inner{grid-template-columns:1fr}
-  .why-img{height:280px}
+  .svc-content{grid-template-columns:1fr;padding-left:32px}
+  .why-inner{grid-template-columns:1fr;gap:48px}
+  .why-img{height:320px}
   .process-grid{grid-template-columns:1fr 1fr;gap:40px}
   .process-grid::before{display:none}
-  .faq-inner{grid-template-columns:1fr;gap:48px}
+  .faq-inner{grid-template-columns:1fr;gap:40px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
-  .strip-grid{grid-template-columns:repeat(3,1fr)}
-  .strip-item:nth-child(n+4){display:none}
+  #before-after{padding:80px 32px}
+  .ba-single{max-width:100%}
 }
+
+/* RESPONSIVE — MOBILE */
 @media(max-width:768px){
-  .hero-headline{font-size:44px}
-  .hero-content{padding:0 28px}
+  /* NAV */
+  #navbar{top:10px;width:calc(100% - 24px);padding:9px 12px 9px 16px}
+  .nav-logo-text{font-size:14px}
+
+  /* HERO */
+  #hero{padding-bottom:60px;align-items:flex-end}
+  .hero-content{padding:0 20px}
+  .hero-pill{font-size:11px;padding:6px 13px;margin-bottom:18px}
+  .hero-headline{font-size:36px;margin-bottom:16px;letter-spacing:-.02em}
+  .hero-sub{font-size:15px;margin-bottom:24px}
+  .hero-cta-row{flex-direction:column;align-items:flex-start;gap:12px}
+  .btn-hero-call{font-size:14px;padding:13px 24px;width:100%;justify-content:center}
+  .hero-trust-pill{width:100%;justify-content:center}
   .hero-review{display:none}
-  #trust-bar{padding:48px 24px}
-  .trust-inner{flex-wrap:wrap;gap:28px}
-  .trust-stat{flex:0 0 45%}
+
+  /* MARQUEE */
+  .marquee-item{font-size:10px;padding:0 14px}
+
+  /* TRUST BAR */
+  #trust-bar{padding:48px 20px}
+  .trust-inner{flex-wrap:wrap;gap:24px;justify-content:center}
+  .trust-stat{flex:0 0 calc(50% - 12px);padding:0 8px}
   .trust-stat::before{display:none}
-  #services,#why,#testimonials,#process,#faq,#contact{padding:80px 24px}
-  .sec-title{font-size:34px}
-  .svc-title{font-size:28px;padding:0 16px}
-  .svc-content{padding-left:0}
-  .strip-grid{grid-template-columns:1fr 1fr}
-  .strip-item:nth-child(n+3){display:none}
+  .trust-num{font-size:38px}
+  .trust-label{font-size:10px}
+
+  /* SECTIONS */
+  #services,#why,#testimonials,#process,#faq,#contact{padding:64px 20px}
+  #before-after{padding:64px 20px}
+  .sec-header{margin-bottom:48px}
+  .sec-eyebrow{font-size:13px}
+  .sec-title{font-size:30px}
+  .sec-sub{font-size:14px}
+
+  /* SERVICES ACCORDION */
+  .svc-header{padding:22px 0}
+  .svc-num{display:none}
+  .svc-title{font-size:22px;padding:0 12px}
+  .svc-content{grid-template-columns:1fr;padding-left:0;gap:24px}
+  .svc-img{aspect-ratio:16/9}
+  .svc-desc{font-size:14px}
+  .svc-feat{font-size:13px}
+
+  /* BEFORE AFTER */
+  .ba-single{border-radius:16px}
+  .ba-wrap{aspect-ratio:4/3}
+  .ba-label{font-size:11px;padding:6px 12px;top:12px}
+  .ba-label.before{left:12px}
+  .ba-label.after{right:12px}
+  .ba-knob{width:42px;height:42px}
+  .ba-knob i{font-size:11px}
+  .ba-caption{font-size:13px;padding:14px 16px}
+
+  /* WHY */
+  #why{padding:64px 20px}
+  .why-inner{grid-template-columns:1fr;gap:36px}
+  .why-img{height:240px;border-radius:16px}
+  .why-quote{font-size:15px;margin:16px 0 24px}
+  .why-pills{gap:8px}
+  .why-pill{font-size:12px;padding:6px 14px}
+  .why-list li{font-size:14px}
+  .btn-white{font-size:13px;padding:12px 24px}
+
+  /* TESTIMONIALS */
+  #testimonials{padding:64px 0}
+  .t-header{padding:0 20px;margin-bottom:40px}
+  .proof-swiper{padding:0 20px 24px !important}
+  .t-card{padding:22px}
+  .t-text{font-size:13px}
+
+  /* PROCESS */
+  .process-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .p-icon{width:56px;height:56px}
+  .p-icon i{font-size:20px}
+  .p-num{font-size:36px}
+  .p-title{font-size:14px}
+  .p-desc{font-size:12px}
+
+  /* FAQ */
+  .faq-inner{grid-template-columns:1fr;gap:32px}
+  .faq-left .sec-title{font-size:30px}
+  .faq-q-text{font-size:14px}
+  .faq-a p{font-size:13px}
+
+  /* CONTACT */
+  .contact-wrap .sec-title{font-size:28px}
+  .contact-sub{font-size:14px;margin:12px 0 32px}
+  .c-group input,.c-group select,.c-group textarea{font-size:16px}
+
+  /* FOOTER */
+  footer{padding:48px 20px 24px}
   .footer-grid{grid-template-columns:1fr;gap:28px}
-  .footer-bottom{flex-direction:column;text-align:center}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
+  .footer-brand-name{font-size:16px}
+  .footer-tagline{font-size:13px}
+
+  /* CTC */
+  #ctc{bottom:16px;right:16px;width:50px;height:50px}
+  #ctc i{font-size:18px}
+}
+
+/* RESPONSIVE — SMALL MOBILE */
+@media(max-width:390px){
+  .hero-headline{font-size:30px}
+  .sec-title{font-size:26px}
+  .trust-stat{flex:0 0 100%}
   .process-grid{grid-template-columns:1fr}
+  .why-pills{gap:6px}
+  .why-pill{font-size:11px;padding:5px 12px}
 }
 </style>
 </head>
