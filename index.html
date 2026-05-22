@@ -883,18 +883,20 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
     <p class="sec-eyebrow" data-aos="fade-up">Επικοινωνία</p>
     <h2 class="sec-title" data-aos="fade-up" data-aos-delay="80">Έτοιμοι να Κάνουμε<br>τον Χώρο σας να Λάμψει;</h2>
     <p class="contact-sub" data-aos="fade-up" data-aos-delay="160">Καλέστε μας ή συμπληρώστε τη φόρμα — απαντάμε εντός ωρών και ορίζουμε ραντεβού στην ώρα που σας βολεύει.</p>
-    <form class="c-form" id="contactForm" data-aos="fade-up" data-aos-delay="200">
+    <form class="c-form" id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" data-aos="fade-up" data-aos-delay="200">
+      <input type="hidden" name="form-name" value="contact">
+      <input type="hidden" name="bot-field" style="display:none">
       <div class="c-group">
         <label>Ονοματεπώνυμο</label>
-        <input type="text" placeholder="π.χ. Μαρία Παπαδοπούλου" required>
+        <input type="text" name="name" placeholder="π.χ. Μαρία Παπαδοπούλου" required>
       </div>
       <div class="c-group">
         <label>Τηλέφωνο</label>
-        <input type="tel" placeholder="69X XXX XXXX" required>
+        <input type="tel" name="phone" placeholder="69X XXX XXXX" required>
       </div>
       <div class="c-group">
         <label>Υπηρεσία που Θέλετε</label>
-        <select required>
+        <select name="service" required>
           <option value="">— Επιλέξτε —</option>
           <option>Τακτικός Καθαρισμός Σπιτιού</option>
           <option>Βαθύς Καθαρισμός</option>
@@ -906,7 +908,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
       </div>
       <div class="c-group">
         <label>Μήνυμα (προαιρετικό)</label>
-        <textarea placeholder="Περιγράψτε σύντομα τον χώρο ή τις ανάγκες σας..."></textarea>
+        <textarea name="message" placeholder="Περιγράψτε σύντομα τον χώρο ή τις ανάγκες σας..."></textarea>
       </div>
       <button type="submit" class="c-submit">Αποστολή Αιτήματος →</button>
     </form>
@@ -1108,15 +1110,15 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   window.addEventListener('touchend', () => dragging = false);
 });
 
-// FORM
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  this.innerHTML = `<div style="text-align:center;padding:48px 0;">
+// FORM — handled by Netlify, show thank you on success param
+if(window.location.search.includes('success=true')){
+  const f = document.getElementById('contactForm');
+  if(f) f.innerHTML = `<div style="text-align:center;padding:48px 0;">
     <div style="font-size:52px;margin-bottom:16px;">✨</div>
     <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:white;margin-bottom:10px;">Ευχαριστούμε!</p>
     <p style="font-size:15px;color:rgba(255,255,255,.65);">Θα επικοινωνήσουμε μαζί σας εντός ολίγων ωρών.</p>
   </div>`;
-});
+}
 </script>
 </body>
 </html>
