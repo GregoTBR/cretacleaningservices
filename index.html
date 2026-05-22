@@ -32,8 +32,8 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:auto}
-body{font-family:var(--body);background:var(--cream);color:var(--dark);overflow-x:hidden;opacity:0;transition:opacity .5s ease}
+html{scroll-behavior:auto;overflow-x:hidden;max-width:100%}
+body{font-family:var(--body);background:var(--cream);color:var(--dark);overflow-x:hidden;max-width:100%;opacity:0;transition:opacity .5s ease}
 body.loaded{opacity:1}
 
 /* SCROLL PROGRESS */
@@ -403,6 +403,15 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   /* CTC */
   #ctc{bottom:16px;right:16px;width:50px;height:50px}
   #ctc i{font-size:18px}
+}
+
+/* PREVENT HORIZONTAL OVERFLOW ON MOBILE */
+@media(max-width:768px){
+  section,footer,nav{overflow-x:hidden;max-width:100vw}
+  #marquee{overflow:hidden}
+  .hero-cta-row{width:100%}
+  .hero-trust-pill{flex-wrap:wrap}
+  .svc-body.open{overflow:hidden}
 }
 
 /* RESPONSIVE — SMALL MOBILE */
@@ -1106,7 +1115,7 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   window.addEventListener('mouseup', () => dragging = false);
 
   wrap.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
-  window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
+  wrap.addEventListener('touchmove', e => { if (dragging) { e.preventDefault(); setPos(e.touches[0].clientX); } }, {passive:false});
   window.addEventListener('touchend', () => dragging = false);
 });
 
