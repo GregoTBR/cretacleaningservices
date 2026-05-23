@@ -71,12 +71,17 @@ body.loaded{opacity:1}
 @keyframes kenBurns4{0%{transform:scale(1.04) translate(0,-1%)}100%{transform:scale(1) translate(-1%,1%)}}
 #hero{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end;padding-bottom:80px}
 #hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,20,45,0.9) 0%,rgba(8,20,45,0.45) 55%,rgba(8,20,45,0.15) 100%);z-index:2;pointer-events:none}
-.hero-slide{position:absolute;inset:-5%;z-index:0;opacity:0;transition:opacity 1.8s ease;background-size:cover;background-position:center;will-change:transform}
+.hero-slide{position:absolute;inset:-5%;z-index:0;opacity:0;transition:opacity 1.8s ease;background-size:cover;background-position:center;will-change:transform;display:none}
 .hero-slide.active{opacity:1}
 .hero-slide.kb1.active{animation:kenBurns1 7s ease-in-out forwards}
 .hero-slide.kb2.active{animation:kenBurns2 7s ease-in-out forwards}
 .hero-slide.kb3.active{animation:kenBurns3 7s ease-in-out forwards}
 .hero-slide.kb4.active{animation:kenBurns4 7s ease-in-out forwards}
+.hero-video-slide{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.8s ease}
+.hero-video-slide.active{opacity:1}
+.hero-video-slide video{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:768px){.hero-slide{display:block}.hero-video-slide{display:none}}
+@media(min-width:769px){.hero-slide{display:none}.hero-video-slide{display:block}}
 .hero-content{position:relative;z-index:3;width:100%;max-width:1200px;margin:0 auto;padding:0 60px}
 .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.14);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.22);border-radius:100px;padding:7px 16px;font-size:12px;font-weight:500;color:var(--white);margin-bottom:28px;opacity:0;animation:fadeUp .6s ease forwards .4s;letter-spacing:.04em}
 .hero-pill i{font-size:10px;color:rgba(255,255,255,.7)}
@@ -458,10 +463,24 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 
 <!-- HERO -->
 <section id="hero">
+  <!-- MOBILE: εικόνες -->
   <div class="hero-slide kb1 active" style="background-image:url('slide1.jpg')"></div>
   <div class="hero-slide kb2" style="background-image:url('slide2.jpg')"></div>
   <div class="hero-slide kb3" style="background-image:url('slide3.jpg')"></div>
   <div class="hero-slide kb4" style="background-image:url('slide4.jpg')"></div>
+  <!-- DESKTOP: βίντεο -->
+  <div class="hero-video-slide active">
+    <video src="hero-housekeeping.mov" autoplay muted loop playsinline></video>
+  </div>
+  <div class="hero-video-slide">
+    <video src="hero-bedroom.mov" autoplay muted loop playsinline></video>
+  </div>
+  <div class="hero-video-slide">
+    <video src="hero-pool.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <div class="hero-video-slide">
+    <video src="hero-office.mp4" autoplay muted loop playsinline></video>
+  </div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
     <h1 class="hero-headline splitting" id="hero-headline">Κάνουμε τον Χώρο σας να Λάμπει</h1>
@@ -995,18 +1014,37 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 // PAGE LOAD
 window.addEventListener('load', () => document.body.classList.add('loaded'));
 
-// HERO IMAGE SLIDESHOW
-const heroSlides = document.querySelectorAll('.hero-slide');
+// HERO SLIDESHOW — εικόνες σε mobile, βίντεο σε desktop
+const isMobile = () => window.innerWidth <= 768;
 const kbClasses = ['kb1','kb2','kb3','kb4'];
-let currentHero = 0;
-setInterval(() => {
-  heroSlides[currentHero].classList.remove('active');
-  currentHero = (currentHero + 1) % heroSlides.length;
-  const next = heroSlides[currentHero];
-  next.classList.remove('kb1','kb2','kb3','kb4');
-  void next.offsetWidth;
-  next.classList.add(kbClasses[currentHero], 'active');
-}, 6000);
+
+if (isMobile()) {
+  // Mobile: image slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    const next = slides[cur];
+    next.classList.remove('kb1','kb2','kb3','kb4');
+    void next.offsetWidth;
+    next.classList.add(kbClasses[cur], 'active');
+  }, 6000);
+} else {
+  // Desktop: video slideshow
+  const vslides = document.querySelectorAll('.hero-video-slide');
+  let vcur = 0;
+  vslides[0].querySelector('video').play();
+  setInterval(() => {
+    vslides[vcur].classList.remove('active');
+    vcur = (vcur + 1) % vslides.length;
+    const next = vslides[vcur];
+    const vid = next.querySelector('video');
+    vid.currentTime = 0;
+    vid.play();
+    next.classList.add('active');
+  }, 6000);
+}
 
 // LENIS
 const lenis = new Lenis({ lerp: 0.09 });
