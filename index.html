@@ -468,18 +468,18 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   <div class="hero-slide kb2" style="background-image:url('slide2.jpg')"></div>
   <div class="hero-slide kb3" style="background-image:url('slide3.jpg')"></div>
   <div class="hero-slide kb4" style="background-image:url('slide4.jpg')"></div>
-  <!-- DESKTOP: βίντεο -->
+  <!-- VIDEOS: desktop=original, mobile=compressed -->
   <div class="hero-video-slide active">
-    <video src="hero-housekeeping.mov" autoplay muted loop playsinline></video>
+    <video data-src="hero-housekeeping.mov" data-src-m="hero-housekeeping-m.m4v" autoplay muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-bedroom.mov" autoplay muted loop playsinline></video>
+    <video data-src="hero-bedroom.mov" data-src-m="hero-bedroom-m.m4v" autoplay muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-pool.mp4" autoplay muted loop playsinline></video>
+    <video data-src="hero-pool.mp4" data-src-m="hero-pool-m.m4v" autoplay muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-office.mp4" autoplay muted loop playsinline></video>
+    <video data-src="hero-office.mp4" data-src-m="hero-office-m.m4v" autoplay muted loop playsinline></video>
   </div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
@@ -660,7 +660,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video src="office-cleaning.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video src="office-cleaning.mov" data-src="office-cleaning.mov" data-src-m="office-cleaning-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -724,7 +724,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <section id="why">
   <div class="why-inner">
     <div class="why-img" data-aos="fade-right">
-      <video src="team.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <video src="team.mp4" data-src="team.mp4" data-src-m="team-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </div>
     <div class="why-content" data-aos="fade-left" data-aos-delay="100">
       <p class="sec-eyebrow">Γιατί να μας Επιλέξετε</p>
@@ -1014,37 +1014,28 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 // PAGE LOAD
 window.addEventListener('load', () => document.body.classList.add('loaded'));
 
-// HERO SLIDESHOW — εικόνες σε mobile, βίντεο σε desktop
-const isMobile = () => window.innerWidth <= 768;
+// HERO VIDEO SLIDESHOW — mobile=compressed m4v, desktop=original
+const heroMobile = window.innerWidth <= 768;
 const kbClasses = ['kb1','kb2','kb3','kb4'];
 
-if (isMobile()) {
-  // Mobile: image slideshow
-  const slides = document.querySelectorAll('.hero-slide');
-  let cur = 0;
-  setInterval(() => {
-    slides[cur].classList.remove('active');
-    cur = (cur + 1) % slides.length;
-    const next = slides[cur];
-    next.classList.remove('kb1','kb2','kb3','kb4');
-    void next.offsetWidth;
-    next.classList.add(kbClasses[cur], 'active');
-  }, 6000);
-} else {
-  // Desktop: video slideshow
-  const vslides = document.querySelectorAll('.hero-video-slide');
-  let vcur = 0;
-  vslides[0].querySelector('video').play();
-  setInterval(() => {
-    vslides[vcur].classList.remove('active');
-    vcur = (vcur + 1) % vslides.length;
-    const next = vslides[vcur];
-    const vid = next.querySelector('video');
-    vid.currentTime = 0;
-    vid.play();
-    next.classList.add('active');
-  }, 6000);
-}
+// Set correct video source based on device (hero + services)
+document.querySelectorAll('video[data-src]').forEach(v => {
+  v.src = heroMobile ? v.dataset.srcM : v.dataset.src;
+  v.load();
+});
+
+const vslides = document.querySelectorAll('.hero-video-slide');
+let vcur = 0;
+vslides[0].querySelector('video').play();
+setInterval(() => {
+  vslides[vcur].classList.remove('active');
+  vcur = (vcur + 1) % vslides.length;
+  const next = vslides[vcur];
+  const vid = next.querySelector('video');
+  vid.currentTime = 0;
+  vid.play();
+  next.classList.add('active');
+}, 6000);
 
 // LENIS
 const lenis = new Lenis({ lerp: 0.09 });
