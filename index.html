@@ -660,7 +660,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video src="office-cleaning.mov" data-src="office-cleaning.mov" data-src-m="office-cleaning-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video src="office-cleaning.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -724,7 +724,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <section id="why">
   <div class="why-inner">
     <div class="why-img" data-aos="fade-right">
-      <video src="team.mp4" data-src="team.mp4" data-src-m="team-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <video src="team.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </div>
     <div class="why-content" data-aos="fade-left" data-aos-delay="100">
       <p class="sec-eyebrow">Γιατί να μας Επιλέξετε</p>
@@ -1014,26 +1014,26 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 // PAGE LOAD
 window.addEventListener('load', () => document.body.classList.add('loaded'));
 
-// HERO VIDEO SLIDESHOW — mobile=compressed m4v, desktop=original
+// HERO VIDEO SLIDESHOW — mobile=compressed, desktop=original
 const heroMobile = window.innerWidth <= 768;
-const kbClasses = ['kb1','kb2','kb3','kb4'];
 
-// Set correct video source based on device (hero + services)
-document.querySelectorAll('video[data-src]').forEach(v => {
+// Set correct source per device
+document.querySelectorAll('.hero-video-slide video').forEach(v => {
   v.src = heroMobile ? v.dataset.srcM : v.dataset.src;
-  v.load();
 });
 
 const vslides = document.querySelectorAll('.hero-video-slide');
 let vcur = 0;
-vslides[0].querySelector('video').play();
+const firstVid = vslides[0].querySelector('video');
+firstVid.play().catch(() => {});
+
 setInterval(() => {
   vslides[vcur].classList.remove('active');
   vcur = (vcur + 1) % vslides.length;
   const next = vslides[vcur];
   const vid = next.querySelector('video');
   vid.currentTime = 0;
-  vid.play();
+  vid.play().catch(() => {});
   next.classList.add('active');
 }, 6000);
 
