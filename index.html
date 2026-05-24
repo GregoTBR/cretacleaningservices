@@ -432,7 +432,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <div class="nav-logo-icon" style="background:url('icon.png') no-repeat center/130%;padding:0;"></div>
+    <div class="nav-logo-icon" style="background:url('icon.jpg') no-repeat center/130%;padding:0;"></div>
     <span class="nav-logo-text">Creta <span>Cleaning</span></span>
   </a>
   <ul class="nav-center">
@@ -571,7 +571,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video src="mopping.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video data-desktop="mopping.mov" data-mobile="mopping-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -646,7 +646,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video src="office-cleaning.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video data-desktop="office-cleaning.mov" data-mobile="office-cleaning-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -941,7 +941,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   <div class="footer-grid">
     <div>
       <div class="footer-brand">
-        <div class="footer-brand-icon" style="background:url('icon.png') no-repeat center/130%;padding:0;"></div>
+        <div class="footer-brand-icon" style="background:url('icon.jpg') no-repeat center/130%;padding:0;"></div>
         <div class="footer-brand-name">Creta Cleaning Services<span>Χερσόνησος, Κρήτη</span></div>
       </div>
       <p class="footer-tagline">Κάνουμε τον χώρο σας να λάμπει ✨<br>Γρήγορα · Αξιόπιστα · Επαγγελματικά</p>
@@ -1000,15 +1000,14 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 // PAGE LOAD
 window.addEventListener('load', () => document.body.classList.add('loaded'));
 
-// HERO VIDEO SLIDESHOW
+// VIDEO SOURCE SWITCHING — mobile vs desktop
 const onMobile = window.innerWidth <= 768;
-const vslides = document.querySelectorAll('.hero-video-slide');
-
-// Φόρτωσε το σωστό αρχείο ανάλογα με συσκευή
-vslides.forEach(slide => {
-  const vid = slide.querySelector('video');
+document.querySelectorAll('video[data-desktop]').forEach(vid => {
   vid.src = onMobile ? vid.dataset.mobile : vid.dataset.desktop;
 });
+
+// HERO VIDEO SLIDESHOW
+const vslides = document.querySelectorAll('.hero-video-slide');
 
 let vcur = 0;
 vslides[0].querySelector('video').play().catch(() => {});
