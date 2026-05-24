@@ -456,16 +456,16 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <!-- HERO -->
 <section id="hero">
   <div class="hero-video-slide active">
-    <video src="hero-housekeeping.mov" autoplay muted loop playsinline></video>
+    <video data-desktop="hero-housekeeping.mov" data-mobile="hero-housekeeping-m.m4v" muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-bedroom.mov" autoplay muted loop playsinline></video>
+    <video data-desktop="hero-bedroom.mov" data-mobile="hero-bedroom-m.m4v" muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-pool.mp4" autoplay muted loop playsinline></video>
+    <video data-desktop="hero-pool.mp4" data-mobile="hero-pool-m.m4v" muted loop playsinline></video>
   </div>
   <div class="hero-video-slide">
-    <video src="hero-office.mp4" autoplay muted loop playsinline></video>
+    <video data-desktop="hero-office.mp4" data-mobile="hero-office-m.m4v" muted loop playsinline></video>
   </div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
@@ -1001,7 +1001,15 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 window.addEventListener('load', () => document.body.classList.add('loaded'));
 
 // HERO VIDEO SLIDESHOW
+const onMobile = window.innerWidth <= 768;
 const vslides = document.querySelectorAll('.hero-video-slide');
+
+// Φόρτωσε το σωστό αρχείο ανάλογα με συσκευή
+vslides.forEach(slide => {
+  const vid = slide.querySelector('video');
+  vid.src = onMobile ? vid.dataset.mobile : vid.dataset.desktop;
+});
+
 let vcur = 0;
 vslides[0].querySelector('video').play().catch(() => {});
 
