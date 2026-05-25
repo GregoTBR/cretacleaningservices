@@ -456,16 +456,16 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <!-- HERO -->
 <section id="hero">
   <div class="hero-video-slide active">
-    <video data-desktop="hero-housekeeping.mov" data-mobile="hero-housekeeping-m.m4v" muted loop playsinline></video>
+    <video data-desktop="hero-housekeeping.mov" data-mobile="hero-housekeeping-m.m4v" muted loop playsinline preload="auto"></video>
   </div>
   <div class="hero-video-slide" data-desktop-only>
-    <video data-desktop="hero-bedroom.mov" data-mobile="" muted loop playsinline></video>
+    <video data-desktop="hero-bedroom.mov" data-mobile="" muted loop playsinline preload="none"></video>
   </div>
   <div class="hero-video-slide">
-    <video data-desktop="hero-pool.mp4" data-mobile="hero-pool-m.m4v" muted loop playsinline></video>
+    <video data-desktop="hero-pool.mp4" data-mobile="hero-pool-m.m4v" muted loop playsinline preload="none"></video>
   </div>
   <div class="hero-video-slide" data-desktop-only>
-    <video data-desktop="hero-office.mp4" data-mobile="" muted loop playsinline></video>
+    <video data-desktop="hero-office.mp4" data-mobile="" muted loop playsinline preload="none"></video>
   </div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
@@ -571,7 +571,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video data-desktop="mopping.mov" data-mobile="mopping-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video data-desktop="mopping.mov" data-mobile="mopping-m.m4v" muted loop playsinline preload="none" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -646,7 +646,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
             <a href="tel:+306942556359" class="svc-cta">Ζητήστε τιμή <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="svc-img">
-            <video data-desktop="office-cleaning.mov" data-mobile="office-cleaning-m.m4v" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            <video data-desktop="office-cleaning.mov" data-mobile="office-cleaning-m.m4v" muted loop playsinline preload="none" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           </div>
         </div>
       </div>
@@ -710,7 +710,7 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
 <section id="why">
   <div class="why-inner">
     <div class="why-img" data-aos="fade-right">
-      <video src="team.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      <video src="team.mp4" muted loop playsinline preload="none" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
     </div>
     <div class="why-content" data-aos="fade-left" data-aos-delay="100">
       <p class="sec-eyebrow">Γιατί να μας Επιλέξετε</p>
@@ -1159,6 +1159,22 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   wrap.addEventListener('touchmove', e => { if (dragging) { e.preventDefault(); setPos(e.touches[0].clientX); } }, {passive:false});
   window.addEventListener('touchend', () => dragging = false);
 });
+
+// LAZY LOAD VIDEOS — φόρτωσε & παίξε μόνο όταν φαίνονται
+const lazyVideos = document.querySelectorAll('video[preload="none"]');
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const vid = entry.target;
+    if (entry.isIntersecting) {
+      if (!vid.src && vid.dataset.desktop) {
+        vid.src = onMobile ? (vid.dataset.mobile || vid.dataset.desktop) : vid.dataset.desktop;
+      }
+      vid.play().catch(() => {});
+      videoObserver.unobserve(vid);
+    }
+  });
+}, { threshold: 0.2 });
+lazyVideos.forEach(v => videoObserver.observe(v));
 
 // FORM — handled by Netlify, show thank you on success param
 if(window.location.search.includes('success=true')){
