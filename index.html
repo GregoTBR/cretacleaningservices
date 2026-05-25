@@ -458,8 +458,14 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   <div class="hero-video-slide active">
     <video data-desktop="hero-housekeeping.mov" data-mobile="hero-housekeeping-m.m4v" muted loop playsinline></video>
   </div>
+  <div class="hero-video-slide" data-desktop-only>
+    <video data-desktop="hero-bedroom.mov" data-mobile="" muted loop playsinline></video>
+  </div>
   <div class="hero-video-slide">
     <video data-desktop="hero-pool.mp4" data-mobile="hero-pool-m.m4v" muted loop playsinline></video>
+  </div>
+  <div class="hero-video-slide" data-desktop-only>
+    <video data-desktop="hero-office.mp4" data-mobile="" muted loop playsinline></video>
   </div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
@@ -996,13 +1002,20 @@ window.addEventListener('load', () => document.body.classList.add('loaded'));
 
 // VIDEO SOURCE SWITCHING — mobile vs desktop
 const onMobile = window.innerWidth <= 768;
-document.querySelectorAll('video[data-desktop]').forEach(vid => {
-  vid.src = onMobile ? vid.dataset.mobile : vid.dataset.desktop;
+
+// Hero: κρύψε desktop-only slides στο mobile
+document.querySelectorAll('.hero-video-slide[data-desktop-only]').forEach(slide => {
+  if (onMobile) slide.style.display = 'none';
 });
 
-// HERO VIDEO SLIDESHOW
-const vslides = document.querySelectorAll('.hero-video-slide');
+// Βάλε σωστή πηγή σε κάθε βίντεο
+document.querySelectorAll('video[data-desktop]').forEach(vid => {
+  const src = onMobile ? vid.dataset.mobile : vid.dataset.desktop;
+  if (src) vid.src = src;
+});
 
+// HERO VIDEO SLIDESHOW — μόνο τα ορατά slides
+const vslides = Array.from(document.querySelectorAll('.hero-video-slide')).filter(s => s.style.display !== 'none');
 let vcur = 0;
 vslides[0].querySelector('video').play().catch(() => {});
 
