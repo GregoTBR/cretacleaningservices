@@ -74,6 +74,13 @@ body.loaded{opacity:1}
 .hero-video-slide{position:absolute;inset:0;z-index:0;opacity:0;transition:opacity 1.8s ease}
 .hero-video-slide.active{opacity:1}
 .hero-video-slide video{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes kb1{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.08) translate(-2%,-1%)}}
+@keyframes kb2{0%{transform:scale(1.05) translate(1%,0)}100%{transform:scale(1) translate(-1%,-2%)}}
+.hero-img-slide{position:absolute;inset:-5%;z-index:0;opacity:0;transition:opacity 1.8s ease;background-size:cover;background-position:center;will-change:transform;display:none}
+.hero-img-slide.active{opacity:1}
+.hero-img-slide.kb1.active{animation:kb1 7s ease-in-out forwards}
+.hero-img-slide.kb2.active{animation:kb2 7s ease-in-out forwards}
+@media(max-width:768px){.hero-img-slide{display:block}}
 .hero-content{position:relative;z-index:3;width:100%;max-width:1200px;margin:0 auto;padding:0 60px}
 .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.14);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.22);border-radius:100px;padding:7px 16px;font-size:12px;font-weight:500;color:var(--white);margin-bottom:28px;opacity:0;animation:fadeUp .6s ease forwards .4s;letter-spacing:.04em}
 .hero-pill i{font-size:10px;color:rgba(255,255,255,.7)}
@@ -461,12 +468,14 @@ footer{background:var(--blue3);border-top:1px solid rgba(255,255,255,0.07);paddi
   <div class="hero-video-slide" data-desktop-only>
     <video data-desktop="hero-bedroom.mov" data-mobile="" muted loop playsinline preload="none"></video>
   </div>
-  <div class="hero-video-slide">
-    <video data-desktop="hero-pool.mp4" data-mobile="hero-pool-m.m4v" muted loop playsinline preload="none"></video>
+  <div class="hero-video-slide" data-desktop-only>
+    <video data-desktop="hero-pool.mp4" data-mobile="" muted loop playsinline preload="none"></video>
   </div>
   <div class="hero-video-slide" data-desktop-only>
     <video data-desktop="hero-office.mp4" data-mobile="" muted loop playsinline preload="none"></video>
   </div>
+  <!-- Mobile only: pool ως εικόνα με Ken Burns -->
+  <div class="hero-img-slide kb2" style="background-image:url('pool-slide.jpg')"></div>
   <div class="hero-content">
     <span class="hero-pill"><i class="fas fa-sparkles"></i> Επαγγελματικοί Καθαρισμοί · Χερσόνησος, Κρήτη</span>
     <h1 class="hero-headline splitting" id="hero-headline">Κάνουμε τον Χώρο σας να Λάμπει</h1>
@@ -1014,19 +1023,28 @@ document.querySelectorAll('video[data-desktop]').forEach(vid => {
   if (src) vid.src = src;
 });
 
-// HERO VIDEO SLIDESHOW — μόνο τα ορατά slides
-const vslides = Array.from(document.querySelectorAll('.hero-video-slide')).filter(s => s.style.display !== 'none');
+// HERO SLIDESHOW — βίντεο + εικόνες
+const heroSlides = Array.from(document.querySelectorAll('.hero-video-slide, .hero-img-slide')).filter(s => s.style.display !== 'none');
 let vcur = 0;
-vslides[0].querySelector('video').play().catch(() => {});
+const firstSlide = heroSlides[0];
+if (firstSlide.classList.contains('hero-video-slide')) {
+  firstSlide.querySelector('video').play().catch(() => {});
+}
 
 setInterval(() => {
-  vslides[vcur].classList.remove('active');
-  vcur = (vcur + 1) % vslides.length;
-  const next = vslides[vcur];
-  const vid = next.querySelector('video');
-  vid.currentTime = 0;
-  vid.play().catch(() => {});
-  next.classList.add('active');
+  heroSlides[vcur].classList.remove('active', 'kb1', 'kb2');
+  vcur = (vcur + 1) % heroSlides.length;
+  const next = heroSlides[vcur];
+  if (next.classList.contains('hero-video-slide')) {
+    const vid = next.querySelector('video');
+    vid.currentTime = 0;
+    vid.play().catch(() => {});
+    next.classList.add('active');
+  } else {
+    // Εικόνα με Ken Burns
+    void next.offsetWidth;
+    next.classList.add('kb2', 'active');
+  }
 }, 6000);
 
 // LENIS
